@@ -1,3 +1,6 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
 .unsupported-message {
   display: none;
 }
@@ -6,4 +9,7 @@ template, body.unsupported > * {
 }
 body.unsupported main.unsupported-message {
   display: block;
+}
+ol {
+  list-style: none;
 }
