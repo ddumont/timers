@@ -15,7 +15,7 @@ function tick() {
   postMessage(['tick',
     local.format(now), // local time formatted to browser locale
     game.format(eorzea), // eorzea time formatted to browser locale
-    Math.floor(eorzea.valueOf() / 1000) * 1000;
+    Math.floor(eorzea.valueOf() / 1000) * 1000
   ]);
 }
 
