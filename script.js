@@ -15,7 +15,7 @@ var local = document.body.querySelector('.time.local');
 var localformat = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric', minute: 'numeric'
 });
-var game = document.body.querySelector('.time.local');
+var game = document.body.querySelector('.time.game');
 var gameformat = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric', minute: 'numeric', timeZone: 'UTC'
 });
