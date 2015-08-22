@@ -1,7 +1,7 @@
 .unsupported-message {
   display: none;
 }
-body.unsupported > * {
+template, body.unsupported > * {
   display: none;
 }
 body.unsupported main.unsupported-message {

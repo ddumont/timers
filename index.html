@@ -3,16 +3,19 @@
   <head>
     <title>clocks</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
+
     <script async defer src="script.js"></script>
+    <script async defer src="data.js"></script>
   </head>
   <body>
-    <nav>
-
-    </nav>
+    <nav></nav>
     <main>
       <section class="clock">
         <span class="time local"></span>
         <span class="time game"></span>
+      </section>
+      <section class="mining">
+        <ol class="list"></ol>
       </section>
     </main>
     <main class="unsupported-message">
@@ -22,4 +25,11 @@
       <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a>.
     </main>
   </body>
+  <template class="mining row">
+    <li>
+      <span class="time"></span>
+      <span class="name"></span>
+      <span class="location"></span>
+    </li>
+  </template>
 </html>
