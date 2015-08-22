@@ -14,4 +14,5 @@ var worker = new Worker("worker.js");
 worker.onmessage = function(e) {
   local.textContent = e.data[1];
   game.textContent = e.data[2];
+  console.log(e.data[3]);
 };

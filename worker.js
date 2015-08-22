@@ -11,10 +11,11 @@ function tick() {
   }, 1000); // tick every second.
 
   var now = new Date();
-  postMessage([
-    'tick',
-    local.format(now),
-    game.format(new Date(now.valueOf() * 3600 / 175))
+  var eorzea = new Date(now.valueOf() * 3600 / 175);
+  postMessage(['tick',
+    local.format(now), // local time formatted to browser locale
+    game.format(eorzea), // eorzea time formatted to browser locale
+    Math.floor(eorzea.valueOf() / 1000) * 1000;
   ]);
 }
 
