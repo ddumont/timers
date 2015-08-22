@@ -1,9 +1,9 @@
 .unsupported-message {
   display: none;
 }
-body.unsupported * {
+body.unsupported > * {
   display: none;
 }
-body.unsupported .unsupported-message {
+body.unsupported main.unsupported-message {
   display: block;
 }
