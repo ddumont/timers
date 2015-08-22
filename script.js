@@ -23,6 +23,7 @@ var gameformat = new Intl.DateTimeFormat(undefined, {
 // Start the web wokrer
 var worker = new Worker("worker.js");
 worker.onmessage = function(e) {
-  local.textContent = localformat.format(new Date());
-  game.textContent = gameformat.format(new Date(Date.UTC() * 3600 / 175));
+  var now = new Date();
+  local.textContent = localformat.format(now);
+  game.textContent = gameformat.format(new Date(now.valueOf() * 3600 / 175));
 };
