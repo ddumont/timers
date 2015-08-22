@@ -7,11 +7,9 @@ if (
   document.body.className = "unsupported";
 }
 
-var options = {
-  hour: 'numeric', minute: 'numeric', second: 'numeric',
-  timeZoneName: 'short'
-};
-var formatter = new Intl.DateTimeFormat(undefined, options);
+var formatter = new Intl.DateTimeFormat(undefined, {
+  hour: 'numeric', minute: 'numeric'
+});
 
 var local = document.body.querySelector('.time.local');
 var game = document.body.querySelector('.time.local');
