@@ -28,13 +28,6 @@ var formatter = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric', minute: 'numeric', timeZone: 'UTC'
 });
 
-// // Start the web wokrer
-// var worker = new Worker("worker.js");
-// worker.onmessage = function(e) {
-//   local.textContent = e.data[1];
-//   game.textContent = e.data[2];
-// };
-
 function build() {
   mining(data.filter(function(item) {
     return item.type === 'mining';
@@ -59,3 +52,10 @@ function mining(data, sort) {
     list.appendChild(document.importNode(template.content, true));
   });
 }
+
+// Start the web wokrer
+var worker = new Worker("worker.js");
+worker.onmessage = function(e) {
+  local.textContent = e.data[1];
+  game.textContent = e.data[2];
+};
