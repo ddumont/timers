@@ -3,6 +3,7 @@ if (
   !window.Intl ||
   !window.Intl.DateTimeFormat ||
   !("onhashchange" in window) ||
+  !("history" in window) ||
   !('content' in document.createElement('template')) ||
   !("classList" in document.createElement("_"))
 ) {
@@ -81,7 +82,6 @@ if (
       li.querySelector('.location').textContent = item.location;
       return document.importNode(content, true).firstElementChild;
     }), sorts.time);
-    hash();
   }
 
   /**
@@ -92,7 +92,7 @@ if (
     Array.prototype.slice.call(
       document.body.querySelector('section.mining ol.list').childNodes
     ).forEach(function(node) {
-      if (node.classList.contains('selected') || 1) {
+      if (node.classList.contains('selected')) {
         var id = Number(node.dataset.nodeid)
         var idx = ~~(id / 8);
         var val = id % 8;
