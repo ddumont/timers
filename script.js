@@ -2,6 +2,7 @@ if (
   !window.Worker ||
   !window.Intl ||
   !window.Intl.DateTimeFormat ||
+  !("onhashchange" in window) ||
   !('content' in document.createElement('template')) ||
   !("classList" in document.createElement("_"))
 ) {
@@ -43,6 +44,10 @@ if (
   } catch(e) {
     console.error(e);
   }
+
+  window.addEventListener("hashchange", function(e) {
+    console.log(e);
+  }, false);
 
   function resort(parent, elems, compare) {
     elems = Array.prototype.slice.call(elems || list.childNodes || [])
