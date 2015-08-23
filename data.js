@@ -4,6 +4,8 @@ var data = (function() {
   var STD = 3*HOURS;
   var HW = 55*MINUTES;
 
+  // Never change the order of these objects, only append new ones on to the end
+  // @see nodeid below, and hash() in script.js
   var ret = [{
       "type": "mining",
       "name": "Abalathian Rock Salt",
@@ -1186,9 +1188,16 @@ var data = (function() {
 
     return Number(match[1]) * 60 * 60 + Number(match[2]) * 60;
   }
-  
-  // convert time to seconds elapsed in day.
+
+  var refs = {};
+  var id = 1;
   ret.forEach(function(item) {
+    // compute nodeid
+    var key = [item.time, item.type, item.location].join('|');
+    if (!refs[key]) refs[key] = id++;
+    item.nodeid = refs[key];
+
+    // convert time to seconds elapsed in day
     if (item.time)
       item.time = convert(item.time);
   });
