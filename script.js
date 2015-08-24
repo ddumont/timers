@@ -11,8 +11,17 @@ if (
 }
 
 (function() {
+  function slice(arr) {
+    return Array.prototype.slice.call(arr);
+  }
+  function q(selector, node) {
+    return (node || document.body).querySelector(selector);
+  }
+  function qa(selector, node) {
+    return (node || document.body).querySelectorAll(selector);
+  }
   if (!window.data) { // let the data load
-    var nodes = Array.prototype.slice.call(document.head.childNodes).filter(function(node) {
+    var nodes = slice(document.head.childNodes).filter(function(node) {
       return node.nodeType === Node.ELEMENT_NODE
         && node.nodeName === 'SCRIPT'
         && /data\.js$/.test(node.src);
@@ -23,8 +32,8 @@ if (
     build();
   }
 
-  var local = document.body.querySelector('.time.local');
-  var game = document.body.querySelector('.time.game');
+  var local = q('.time.local');
+  var game = q('.time.game');
   var formatter = new Intl.DateTimeFormat(undefined, {
     hour: 'numeric', minute: 'numeric', timeZone: 'UTC'
   });
@@ -35,9 +44,9 @@ if (
       delta = Number(a.dataset.nodeid) - Number(b.dataset.nodeid);
       if (delta !== 0) return delta;
       return Number(a.dataset.slot) - Number(b.dataset.slot);
-
     }
   };
+
   try {
     // Start the web wokrer
     var worker = new Worker("worker.js");
@@ -49,12 +58,10 @@ if (
     console.error(e);
   }
 
-  window.addEventListener("hashchange", function(e) {
-    console.log(e);
-  }, false);
+  window.addEventListener("hashchange", unhash, false);
 
   function resort(parent, elems, compare) {
-    elems = Array.prototype.slice.call(elems || list.childNodes || [])
+    elems = slice(elems || list.childNodes || [])
     .filter(function(node) {
       return node.nodeType === Node.ELEMENT_NODE;
     });
@@ -74,9 +81,7 @@ if (
       return item.type === 'fishing';
     }));
 
-    Array.prototype.slice.call(
-      document.body.querySelectorAll('li[data-nodeid]')
-    ).forEach(function(node, idx, arr) {
+    slice(qa('li[data-nodeid]')).forEach(function(node, idx, arr) {
       node.addEventListener('click', function(e) {
         var target = e.currentTarget;
         arr.forEach(function(check) {
@@ -91,59 +96,59 @@ if (
   }
 
   function mining(data) {
-    var list = document.body.querySelector('section.mining ol');
+    var list = q('section.mining ol');
     list.innerHTML = '';
 
-    var content = document.body.querySelector('template.mining.row').content;
+    var content = q('template.mining.row').content;
     resort(list, data.map(function(item, idx) {
-      var li = content.querySelector('li');
+      var li = q('li', content);
       Object.keys(item).forEach(function(key) {
         li.dataset[key] = item[key];
       });
       li.dataset.id = idx;
-      li.querySelector('.time').textContent = formatter.format(new Date(item.time * 1000));
-      li.querySelector('.name').textContent = item.name;
-      li.querySelector('.location').textContent = item.location;
+      q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
+      q('.name', li).textContent = item.name;
+      q('.location', li).textContent = item.location;
 
       return document.importNode(content, true).firstElementChild;
     }), sorts.default);
   }
 
   function botany(data) {
-    var list = document.body.querySelector('section.botany ol');
+    var list = q('section.botany ol');
     list.innerHTML = '';
 
     // use the mining template for now.
-    var content = document.body.querySelector('template.mining.row').content;
+    var content = q('template.mining.row').content;
     resort(list, data.map(function(item, idx) {
-      var li = content.querySelector('li');
+      var li = q('li', content);
       Object.keys(item).forEach(function(key) {
         li.dataset[key] = item[key];
       });
       li.dataset.id = idx;
-      li.querySelector('.time').textContent = formatter.format(new Date(item.time * 1000));
-      li.querySelector('.name').textContent = item.name;
-      li.querySelector('.location').textContent = item.location;
+      q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
+      q('.name', li).textContent = item.name;
+      q('.location', li).textContent = item.location;
 
       return document.importNode(content, true).firstElementChild;
     }), sorts.default);
   }
 
   function fishing(data) {
-    var list = document.body.querySelector('section.fishing ol');
+    var list = q('section.fishing ol');
     list.innerHTML = '';
 
     // use the mining template for now.
-    var content = document.body.querySelector('template.mining.row').content;
+    var content = q('template.mining.row').content;
     resort(list, data.map(function(item, idx) {
-      var li = content.querySelector('li');
+      var li = q('li', content);
       Object.keys(item).forEach(function(key) {
         li.dataset[key] = item[key];
       });
       li.dataset.id = idx;
-      li.querySelector('.time').textContent = formatter.format(new Date(item.time * 1000));
-      li.querySelector('.name').textContent = item.name;
-      li.querySelector('.location').textContent = item.location;
+      q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
+      q('.name', li).textContent = item.name;
+      q('.location', li).textContent = item.location;
 
       return document.importNode(content, true).firstElementChild;
     }), sorts.default);
@@ -154,9 +159,7 @@ if (
    */
   function hash() {
     var data = [];
-    Array.prototype.slice.call(
-      document.body.querySelectorAll('li[data-nodeid]')
-    ).forEach(function(node) {
+    slice(qa('li[data-nodeid]')).forEach(function(node) {
       if (node.classList.contains('selected')) {
         var id = Number(node.dataset.nodeid)
         var idx = ~~(id / 8);
@@ -174,15 +177,13 @@ if (
    */
   function unhash() {
     var hash = window.location.hash.substring(1);
-    var nodeid = 0;
     var data = atob(hash);
     for (var idx = 0; idx < data.length; idx++) {
       var mask = data.charCodeAt(idx);
-      for (var j = 8; j > 0; j--) {
-        var id = nodeid++;
+      for (var i = 0; i < 8; i++) {
         if (mask && (mask & 1)) {
-          var nodes = document.body.querySelectorAll('li[data-nodeid="' + id + '"]');
-          Array.prototype.slice.call(nodes || []).forEach(function(node) {
+          var nodes = qa('li[data-nodeid="' + (8 * idx + i) + '"]');
+          slice(nodes || []).forEach(function(node) {
             node.classList.add('selected')
           });
         }
@@ -190,5 +191,5 @@ if (
       }
     };
   }
-  window.addEventListener("hashchange", unhash, false);
+
 })();
