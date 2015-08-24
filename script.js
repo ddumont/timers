@@ -190,4 +190,5 @@ if (
       }
     };
   }
+  window.addEventListener("hashchange", unhash, false);
 })();
