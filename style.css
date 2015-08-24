@@ -10,6 +10,9 @@ template, body.unsupported > * {
 body.unsupported main.unsupported-message {
   display: block;
 }
+main {
+  display: flex;
+}
 ol {
   list-style: none;
   background-color: #CFF09E;
@@ -18,8 +21,7 @@ ol {
 }
 li {
   cursor: pointer;
-  margin: 0;
-  padding: 0;
+  display: flex;
 }
 li:hover {
   background-color: #A8DBA8;
@@ -29,4 +31,18 @@ li.selected {
 }
 li.selected:hover {
   background-color: #3B8686;
+}
+
+li .time, li .name, li .location {
+  padding: 2px 4px;
+}
+li .time {
+  min-width: 4.5em;
+  text-align: right;
+}
+li .name {
+  flex-grow: 1;
+}
+li .location {
+
 }
