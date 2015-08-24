@@ -17,8 +17,8 @@ if (
   function q(selector, node) {
     return (node || document.body).querySelector(selector);
   }
-  function qa(selector, node) {
-    return (node || document.body).querySelectorAll(selector);
+  function qa(selector, node) { // snapshot
+    return slice((node || document.body).querySelectorAll(selector) || []);
   }
   if (!window.data) { // let the data load
     var nodes = slice(document.head.childNodes).filter(function(node) {
@@ -61,7 +61,7 @@ if (
   window.addEventListener("hashchange", unhash, false);
 
   function resort(parent, elems, compare) {
-    elems = slice(elems || list.childNodes || [])
+    elems = slice(elems || parent.childNodes || [])
     .filter(function(node) {
       return node.nodeType === Node.ELEMENT_NODE;
     });
@@ -81,7 +81,7 @@ if (
       return item.type === 'fishing';
     }));
 
-    slice(qa('li[data-nodeid]')).forEach(function(node, idx, arr) {
+    qa('li[data-nodeid]').forEach(function(node, idx, arr) {
       node.addEventListener('click', function(e) {
         var target = e.currentTarget;
         arr.forEach(function(check) {
@@ -159,7 +159,7 @@ if (
    */
   function hash() {
     var data = [];
-    slice(qa('li[data-nodeid]')).forEach(function(node) {
+    qa('li[data-nodeid]').forEach(function(node) {
       if (node.classList.contains('selected')) {
         var id = Number(node.dataset.nodeid)
         var idx = ~~(id / 8);
@@ -182,8 +182,7 @@ if (
       var mask = data.charCodeAt(idx);
       for (var i = 0; i < 8; i++) {
         if (mask && (mask & 1)) {
-          var nodes = qa('li[data-nodeid="' + (8 * idx + i) + '"]');
-          slice(nodes || []).forEach(function(node) {
+          qa('li[data-nodeid="' + (8 * idx + i) + '"]').forEach(function(node) {
             node.classList.add('selected')
           });
         }
