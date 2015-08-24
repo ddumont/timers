@@ -67,7 +67,7 @@ if (
   }
 
   function mining(data) {
-    var list = document.body.querySelector('section.mining ol.list');
+    var list = document.body.querySelector('section.mining ol');
     list.innerHTML = '';
 
     var content = document.body.querySelector('template.mining.row').content;
@@ -80,7 +80,18 @@ if (
       li.querySelector('.time').textContent = formatter.format(new Date(item.time * 1000));
       li.querySelector('.name').textContent = item.name;
       li.querySelector('.location').textContent = item.location;
-      return document.importNode(content, true).firstElementChild;
+
+      var elem = document.importNode(content, true).firstElementChild;
+      elem.addEventListener('click', function(e) {
+        Array.prototype.slice.call(
+          document.body.querySelectorAll('[data-nodeid="' + item.nodeid + '"]')
+        ).forEach(function(node) {
+          node.classList.toggle('selected');
+        });
+        hash();
+      });
+
+      return elem;
     }), sorts.time);
   }
 
@@ -90,7 +101,7 @@ if (
   function hash() {
     var data = [];
     Array.prototype.slice.call(
-      document.body.querySelector('section.mining ol.list').childNodes
+      document.body.querySelectorAll('section.mining ol li')
     ).forEach(function(node) {
       if (node.classList.contains('selected')) {
         var id = Number(node.dataset.nodeid)
@@ -98,8 +109,12 @@ if (
         var val = id % 8;
         data[idx] = (data[idx] || 0) | (1 << val);
       }
-    })
-    history.replaceState(undefined, undefined, '#' + btoa(data.map(String.fromCharCode).join('')));
+    });
+    var encoded = btoa(data.map(function(num) {
+      return String.fromCharCode(num);
+    }).join(''));
+
+    history.replaceState(undefined, undefined, '#' + encoded);
   }
 
   /**
@@ -107,20 +122,20 @@ if (
    */
   function unhash() {
     var hash = window.location.hash.substring(1);
-    var id = 1;
-    Array.prototype.slice.call(atob(hash)).map(function(char) {
-      return char.charCodeAt(0);
-    }).forEach(function(mask) {
-      while (mask) {
-        var nodeid = id++;
-        if (mask & 1) {
-          var nodes = document.body.querySelectorAll('[data-nodeid="' + nodeid + '"]');
+    var nodeid = 0;
+    var data = atob(hash);
+    for (var idx = 0; idx < data.length; idx++) {
+      var mask = data.charCodeAt(idx);
+      for (var j = 8; j > 0; j--) {
+        var id = nodeid++;
+        if (mask && (mask & 1)) {
+          var nodes = document.body.querySelectorAll('[data-nodeid="' + id + '"]');
           Array.prototype.slice.call(nodes || []).forEach(function(node) {
             node.classList.add('selected')
           });
         }
         mask >>>= 1;
       }
-    });
+    };
   }
 })();

@@ -12,4 +12,21 @@ body.unsupported main.unsupported-message {
 }
 ol {
   list-style: none;
+  background-color: #CFF09E;
+  margin: 0;
+  padding: 0;
+}
+li {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+li:hover {
+  background-color: #A8DBA8;
+}
+li.selected {
+  background-color: #79BD9A;
+}
+li.selected:hover {
+  background-color: #3B8686;
 }
