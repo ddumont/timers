@@ -161,3 +161,16 @@ ol li .location {
 ol li .type {
   display: none;
 }
+section.ads {
+  position: fixed;
+  top: calc(50% - 312px);
+  right: 0;
+  padding: 10px;
+  padding-bottom: 8px;
+  background-color: #F8F8F8;
+  border-top: solid #D1D1D1 1px;
+  border-left: solid #D1D1D1 1px;
+  border-bottom: solid #D1D1D1 1px;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+}
