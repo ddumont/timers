@@ -44,6 +44,9 @@ if (
       delta = Number(a.dataset.nodeid) - Number(b.dataset.nodeid);
       if (delta !== 0) return delta;
       return Number(a.dataset.slot) - Number(b.dataset.slot);
+    },
+    'nodeid': function(a,b) {
+      return Number(a.dataset.nodeid) - Number(b.dataset.nodeid);
     }
   };
 
@@ -88,6 +91,13 @@ if (
           if (check.dataset.nodeid === target.dataset.nodeid)
             check.classList.toggle('selected');
         });
+        hash();
+      });
+    });
+
+    qa('section[data-sectionid]').forEach(function(elem) {
+      q('h1 a', elem).addEventListener("click", function(e) {
+        elem.classList.toggle('minimize');
         hash();
       });
     });
@@ -157,13 +167,16 @@ if (
   }
 
   /**
-   * Construct a mask of selected nodeids and encode it into the location hash.
+   * @param {Array<Element>} elems
+   * @param {<Boolean> Function(Element)} filter
+   * @param {<Number> Function(Element)?} identify
+   * @return {string} encoded bitarray
    */
-  function hash() {
+  function encodeba(elems, filter, identify) {
     var data = [];
-    qa('li[data-nodeid]').forEach(function(node) {
-      if (node.classList.contains('selected')) {
-        var id = Number(node.dataset.nodeid)
+    elems.forEach(function(elem) {
+      if (filter(elem)) {
+        var id = identify(elem);
         var idx = ~~(id / 8);
         var val = id % 8;
         data[idx] = (data[idx] || 0) | (1 << val);
@@ -171,26 +184,69 @@ if (
     });
     for (var i = 0; i < data.length; i++)
       data[i] = String.fromCharCode(data[i] || 0);
-    history.replaceState(undefined, undefined, '#' + btoa(data.join('')));
+    return btoa(data.join(''));
+  }
+
+  /**
+   * @param {string} enc Encoded bitarray
+   * @param {Function<Number>} apply
+   */
+  function decodeba(enc, apply) {
+    var data = atob(enc);
+    for (var idx = 0; idx < data.length; idx++) {
+      var mask = data.charCodeAt(idx);
+      for (var i = 0; i < 8; i++) {
+        if (mask && (mask & 1))
+          apply(8 * idx + i);
+        mask >>>= 1;
+      }
+    }
+  }
+
+  /**
+   * Construct a mask of selected nodeids and encode it into the location hash.
+   */
+  function hash() {
+    var enc = encodeba(
+      qa('li[data-nodeid]'),
+      function(elem) { return elem.classList.contains('selected'); },
+      function(elem) { return Number(elem.dataset.nodeid); }
+    );
+    if (qa('section[data-sectionid].minimize').length) {
+      enc += '|' + encodeba(
+        qa('section[data-sectionid]'),
+        function(elem) { return elem.classList.contains('minimize'); },
+        function(elem) { return Number(elem.dataset.sectionid); }
+      );
+    }
+
+    history.replaceState(undefined, undefined, '#' + enc);
   }
 
   /**
    * Using the location hash as a nodeid mask, mark the nodes selected.
    */
   function unhash() {
-    var hash = window.location.hash.substring(1);
-    var data = atob(hash);
-    for (var idx = 0; idx < data.length; idx++) {
-      var mask = data.charCodeAt(idx);
-      for (var i = 0; i < 8; i++) {
-        if (mask && (mask & 1)) {
-          qa('li[data-nodeid="' + (8 * idx + i) + '"]').forEach(function(node) {
-            node.classList.add('selected')
-          });
-        }
-        mask >>>= 1;
-      }
-    };
+    // reset
+    qa('li[data-nodeid]').forEach(function(node) {
+      node.classList.remove('selected');
+    });
+    qa('section[data-sectionid]').forEach(function(node) {
+      node.classList.remove('minimize');
+    });
+
+    // read values from hash
+    var hash = window.location.hash.substring(1).split('|');
+    decodeba(hash[0] || '', function(id) {
+      qa('li[data-nodeid="' + id + '"]').forEach(function(elem) {
+        elem.classList.add('selected');
+      });
+    });
+    decodeba(hash[1] || '', function(id) {
+      qa('section[data-sectionid="' + id + '"]').forEach(function(elem) {
+        elem.classList.add('minimize');
+      });
+    });
   }
 
 })();

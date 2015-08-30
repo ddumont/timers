@@ -17,9 +17,16 @@ main {
   max-width: calc(100% - 350px);
   margin: auto;
   justify-content: center;
+  align-items: flex-start;
 }
 h1 {
   margin-left: 2.5px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+h1 a {
+  text-decoration: none;
+  color: black;
 }
 img.github {
   position: absolute;
@@ -34,7 +41,29 @@ ol {
   padding: 5px;
   border: solid #D1D1D1 1px;
   border-radius: 8px;
+  overflow: hidden;
 }
+main section {
+  order: 0;
+}
+main section.minimize {
+  order: 1;
+  position: fixed;
+  margin-top: 0.5em;
+}
+main section.minimize h1 {
+  margin: 0;
+}
+main section.minimize ~ section.minimize {
+  margin-top: 2.5em;
+}
+main section.minimize ~ section.minimize ~ section.minimize {
+  margin-top: 4.5em;
+}
+main section.minimize ol {
+  display: none;
+}
+
 li {
   cursor: pointer;
   display: flex;
