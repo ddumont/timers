@@ -83,7 +83,8 @@ if (
         elem.dataset.hour = hour;
 
         var duration = elem.dataset.duration;
-        var active = day - delta < duration;
+        var active = duration - (day - delta) > 0;
+        game.dataset.sort = Boolean(game.dataset.sort) || (active ^ elem.classList.contains('active'));
         elem.classList.toggle('active', active);
         if (active)
           q('.time', elem).textContent = formatterhm.format((duration - (day - delta)) * 1000);
@@ -92,10 +93,8 @@ if (
         else
           q('.time', elem).textContent = hour + ':00';
       });
-      if (game.dataset.hour !== hour) {
+      if (Boolean(game.dataset.sort))
         resort(q('.active ol'), qa('.active li.selected'), sorts.timeleft);
-        game.dataset.hour = hour;
-      }
     };
   } catch(e) {
     console.error(e);
@@ -129,7 +128,7 @@ if (
         qa('li[data-nodeid="' + e.currentTarget.dataset.nodeid + '"]').forEach(function(check) {
           check.classList.toggle('selected');
         });
-        resort(q('.active ol'), qa('.active li.selected'), sorts.timeleft);
+        game.dataset.sort = true;
         hash();
       });
     });

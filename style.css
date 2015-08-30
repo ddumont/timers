@@ -102,7 +102,6 @@ main section.active ol {
 main section.active ol li {
   padding: 0;
   display: none;
-  justify-content: space-between;
 }
 main section.active ol li.selected {
   display: flex;
@@ -110,14 +109,22 @@ main section.active ol li.selected {
 }
 main section.active ol li.selected.active {
   display: flex;
-  background-color: #6B99C1;
+  background-color: #93C0E1;
 }
 main section.active ol li span {
-  padding: 0;
+  padding: 0 2px;
   font-size: x-small;
 }
 main section.active ol li .name {
   display: none;
+}
+main section.active ol li .time {
+  min-width: 0;
+}
+main section.active ol li .type {
+  display: list-item;
+  width: 2em;
+  text-align: center;
 }
 
 main section.clock {
@@ -148,4 +155,9 @@ ol li .name {
 }
 ol li .location {
   font-size: x-small;
+  flex: 1 1 auto;
+  text-align: right;
+}
+ol li .type {
+  display: none;
 }
