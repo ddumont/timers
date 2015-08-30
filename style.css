@@ -18,6 +18,12 @@ main {
   margin: auto;
   justify-content: center;
 }
+img.github {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
 ol {
   list-style: none;
   background-color: #F8F8F8;
