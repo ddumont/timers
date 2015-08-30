@@ -1,5 +1,6 @@
 body {
   font-family: 'Roboto', sans-serif;
+  background-color: #EFEFEF;
 }
 .unsupported-message {
   display: none;
@@ -12,27 +13,49 @@ body.unsupported main.unsupported-message {
 }
 main {
   display: flex;
+  flex-wrap: wrap;
+  max-width: calc(100% - 400px);
+  margin: auto;
+  justify-content: center;
 }
 ol {
   list-style: none;
-  background-color: #CFF09E;
+  background-color: #F8F8F8;
   margin: 0;
-  padding: 0;
+  padding: 5px;
+  border: solid #E1E1E1 1px;
 }
 li {
   cursor: pointer;
   display: flex;
+  padding: 2px;
 }
 li:hover {
-  background-color: #A8DBA8;
+  background-color: #93C0E1;
 }
 li.selected {
-  background-color: #79BD9A;
+  background-color: #6B99C1;
 }
 li.selected:hover {
-  background-color: #3B8686;
+  background-color: #307DAF;
 }
 
+.clock {
+  position: fixed;
+  transform: translateX(-190px);
+  width: 170px;
+}
+.clock .time {
+  font-size: 20pt;
+  text-align: right;
+}
+.clock .game {
+  font-weight: bold;
+  color: #D74D35;
+}
+.clock .local {
+  color: #2E7FB4
+}
 li .time, li .name, li .location {
   padding: 2px 4px;
 }
