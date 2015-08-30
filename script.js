@@ -268,7 +268,7 @@ if (
       );
     }
 
-    history.replaceState(undefined, undefined, '#' + enc);
+    history.replaceState(undefined, undefined, '#' + encodeURI(enc));
   }
 
   /**
@@ -284,7 +284,7 @@ if (
     });
 
     // read values from hash
-    var hash = window.location.hash.substring(1).split('|');
+    var hash = decodeURI(window.location.hash.substring(1)).split('|');
     decodeba(hash[0] || '', function(id) {
       qa('li[data-nodeid="' + id + '"]').forEach(function(elem) {
         elem.classList.add('selected');
