@@ -86,11 +86,11 @@ main section.minimize {
   display:none;
 }
 
-.active {
+main section.active {
   position: fixed;
   transform: translate3d(-175px, 125px, 0);
 }
-.active ol {
+main section.active ol {
   max-width: 170px;
   min-width: 170px;
   margin: 0;
@@ -99,37 +99,41 @@ main section.minimize {
   background-color: transparent;
   border-radius: 0;
 }
-.active ol li {
+main section.active ol li {
   padding: 0;
   display: none;
   justify-content: space-between;
 }
-.active ol li.selected {
+main section.active ol li.selected {
   display: flex;
   background-color: transparent;
 }
-.active ol li span {
+main section.active ol li.selected.active {
+  display: flex;
+  background-color: #6B99C1;
+}
+main section.active ol li span {
   padding: 0;
   font-size: x-small;
 }
-.active ol li .name {
+main section.active ol li .name {
   display: none;
 }
 
-.clock {
+main section.clock {
   position: fixed;
   transform: translateX(-175px);
   width: 170px;
 }
-.clock .time {
+main section.clock .time {
   font-size: x-large;
   text-align: right;
 }
-.clock .game {
+main section.clock .game {
   font-weight: bold;
   color: #D74D35;
 }
-.clock .local {
+main section.clock .local {
   color: #2E7FB4
 }
 ol li .time, ol li .name, ol li .location {

@@ -58,6 +58,9 @@ if (
       return Number(a.dataset.nodeid) - Number(b.dataset.nodeid);
     },
     'timeleft': function(a,b) {
+      var aa = a.classList.contains('active') ? 0 : 1;
+      var ab = b.classList.contains('active') ? 0 : 1;
+      if (aa !== ab) return aa - ab;
       return Number(a.dataset.hour) - Number(b.dataset.hour);
     }
   };
@@ -78,7 +81,13 @@ if (
         var delta = (time - now) % (day) + 60;
         var hour = formatterh.format(delta * 1000);
         elem.dataset.hour = hour;
-        if (delta < twohr)
+
+        var duration = elem.dataset.duration;
+        var active = day - delta < duration;
+        elem.classList.toggle('active', active);
+        if (active)
+          q('.time', elem).textContent = formatterhm.format((duration - (day - delta)) * 1000);
+        else if (delta < twohr)
           q('.time', elem).textContent = formatterhm.format(delta * 1000);
         else
           q('.time', elem).textContent = hour + ':00';
@@ -120,6 +129,7 @@ if (
         qa('li[data-nodeid="' + e.currentTarget.dataset.nodeid + '"]').forEach(function(check) {
           check.classList.toggle('selected');
         });
+        resort(q('.active ol'), qa('.active li.selected'), sorts.timeleft);
         hash();
       });
     });
