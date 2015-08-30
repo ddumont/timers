@@ -105,6 +105,16 @@ if (
       });
     });
 
+    qa('nav li').forEach(function(elem) {
+      q('a', elem).addEventListener("click", function(e) {
+        var section = q('section.' + elem.dataset.target);
+        section.classList.remove('minimize');
+        q('h1 a', section).focus();
+
+        hash();
+      });
+    });
+
     unhash();
   }
 

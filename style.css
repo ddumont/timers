@@ -29,11 +29,26 @@ h1 a {
   color: black;
 }
 img.github {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   border: 0;
 }
+nav {
+  position: fixed;
+  top: 130px;
+  right: 0;
+  margin: 1em 0 0 1em;
+}
+nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+nav a {
+  color: #D74D35;
+}
+
 ol {
   list-style: none;
   background-color: #F8F8F8;
@@ -42,41 +57,25 @@ ol {
   border: solid #D1D1D1 1px;
   border-radius: 8px;
   overflow: hidden;
+  min-width: 25em;
 }
-main section {
-  order: 0;
-}
-main section.minimize {
-  order: 1;
-  position: fixed;
-  margin-top: 0.5em;
-}
-main section.minimize h1 {
-  margin: 0;
-}
-main section.minimize ~ section.minimize {
-  margin-top: 2.5em;
-}
-main section.minimize ~ section.minimize ~ section.minimize {
-  margin-top: 4.5em;
-}
-main section.minimize ol {
-  display: none;
-}
-
-li {
+ol li {
   cursor: pointer;
   display: flex;
   padding: 2px;
 }
-li:hover {
+ol li:hover {
   background-color: #93C0E1;
 }
-li.selected {
+ol li.selected {
   background-color: #6B99C1;
 }
-li.selected:hover {
+ol li.selected:hover {
   background-color: #307DAF;
+}
+
+main section.minimize {
+  display:none;
 }
 
 .clock {
@@ -95,17 +94,16 @@ li.selected:hover {
 .clock .local {
   color: #2E7FB4
 }
-li .time, li .name, li .location {
+ol li .time, ol li .name, ol li .location {
   padding: 2px 4px;
 }
-li .time {
+ol li .time {
   min-width: 4.5em;
   text-align: right;
 }
-li .name {
+ol li .name {
   flex-grow: 1;
-  padding-right: 3em;
 }
-li .location {
+ol li .location {
   font-size: x-small;
 }
