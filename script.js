@@ -34,6 +34,9 @@ if (
 
   var local = q('.time.local');
   var game = q('.time.game');
+  var formatterl = new Intl.DateTimeFormat(undefined, {
+    hour: 'numeric', minute: 'numeric'
+  });
   var formatter = new Intl.DateTimeFormat(undefined, {
     hour: 'numeric', minute: 'numeric', timeZone: 'UTC'
   });
@@ -54,8 +57,8 @@ if (
     // Start the web wokrer
     var worker = new Worker("worker.js");
     worker.onmessage = function(e) {
-      local.textContent = e.data[1];
-      game.textContent = e.data[2];
+      local.textContent = formatterl.format(e.data[1]);
+      game.textContent = formatter.format(e.data[2]);
     };
   } catch(e) {
     console.error(e);
