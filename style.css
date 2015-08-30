@@ -163,14 +163,17 @@ ol li .type {
 }
 section.ads {
   position: fixed;
-  top: calc(50% - 312px);
+  top: calc(50% - 330px);
   right: 0;
-  padding: 10px;
-  padding-bottom: 8px;
+  padding: 2px 6px 2px 10px;
   background-color: #F8F8F8;
-  border-top: solid #D1D1D1 1px;
-  border-left: solid #D1D1D1 1px;
-  border-bottom: solid #D1D1D1 1px;
+  border: solid #D1D1D1 1px;
   border-bottom-left-radius: 8px;
   border-top-left-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+section.ads > div {
+  padding: 4px 0;
 }
