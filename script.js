@@ -40,6 +40,12 @@ if (
   var formatter = new Intl.DateTimeFormat(undefined, {
     hour: 'numeric', minute: 'numeric', timeZone: 'UTC'
   });
+  var formatterh = new Intl.DateTimeFormat(undefined, {
+    hour: 'numeric', timeZone: 'UTC', hour12: false
+  });
+  var formatterhm = new Intl.DateTimeFormat(undefined, {
+    hour: 'numeric',  minute: 'numeric', timeZone: 'UTC', hour12: false
+  });
   var sorts = {
     'default': function(a, b) {
       var delta = Number(a.dataset.time) - Number(b.dataset.time);
@@ -50,15 +56,37 @@ if (
     },
     'nodeid': function(a,b) {
       return Number(a.dataset.nodeid) - Number(b.dataset.nodeid);
+    },
+    'timeleft': function(a,b) {
+      return Number(a.dataset.hour) - Number(b.dataset.hour);
     }
   };
-
+  var day = 60 * 60 * 24;
+  var twohr = 2 * 60 * 60;
   try {
     // Start the web wokrer
     var worker = new Worker("worker.js");
     worker.onmessage = function(e) {
       local.textContent = formatterl.format(e.data[1]);
       game.textContent = formatter.format(e.data[2]);
+      var hour = formatterh.format(e.data[2]);
+      var now = Math.floor(e.data[2].getTime() / 1000) % (day);
+      qa('.active li.selected').forEach(function(elem) {
+        var time = Number(elem.dataset.time);
+        if (time < now)
+          time += day;
+        var delta = (time - now) % (day) + 60;
+        var hour = formatterh.format(delta * 1000);
+        elem.dataset.hour = hour;
+        if (delta < twohr)
+          q('.time', elem).textContent = formatterhm.format(delta * 1000);
+        else
+          q('.time', elem).textContent = hour + ':00';
+      });
+      if (game.dataset.hour !== hour) {
+        resort(q('.active ol'), qa('.active li.selected'), sorts.timeleft);
+        game.dataset.hour = hour;
+      }
     };
   } catch(e) {
     console.error(e);
@@ -87,12 +115,10 @@ if (
       return item.type === 'fishing';
     }));
 
-    qa('li[data-nodeid]').forEach(function(node, idx, arr) {
+    qa('section[data-sectionid] li[data-nodeid]').forEach(function(node, idx) {
       node.addEventListener('click', function(e) {
-        var target = e.currentTarget;
-        arr.forEach(function(check) {
-          if (check.dataset.nodeid === target.dataset.nodeid)
-            check.classList.toggle('selected');
+        qa('li[data-nodeid="' + e.currentTarget.dataset.nodeid + '"]').forEach(function(check) {
+          check.classList.toggle('selected');
         });
         hash();
       });
@@ -120,7 +146,7 @@ if (
 
   function mining(data) {
     var list = q('section.mining ol');
-    list.innerHTML = '';
+    var active = q('section.active ol');
 
     var content = q('template.mining.row').content;
     resort(list, data.map(function(item, idx) {
@@ -133,18 +159,20 @@ if (
       q('.name', li).textContent = item.name;
       var location = q('.location', li);
       location.textContent = item.location;
-      location.title = location.alt = item.location;
 
-      return document.importNode(content, true).firstElementChild;
+      var item = document.importNode(content, true).firstElementChild;
+      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]').length)
+        active.appendChild(item.cloneNode(true));
+
+      return item;
     }), sorts.default);
   }
 
   function botany(data) {
     var list = q('section.botany ol');
-    list.innerHTML = '';
+    var active = q('section.active ol');
 
-    // use the mining template for now.
-    var content = q('template.mining.row').content;
+    var content = q('template.botany.row').content;
     resort(list, data.map(function(item, idx) {
       var li = q('li', content);
       Object.keys(item).forEach(function(key) {
@@ -153,18 +181,21 @@ if (
       li.dataset.id = idx;
       q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
       q('.name', li).textContent = item.name;
-      q('.location', li).textContent = item.loc || item.location;
+      q('.location', li).textContent = item.location;
 
-      return document.importNode(content, true).firstElementChild;
+      var item = document.importNode(content, true).firstElementChild;
+      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]').length)
+        active.appendChild(item.cloneNode(true));
+
+      return item;
     }), sorts.default);
   }
 
   function fishing(data) {
     var list = q('section.fishing ol');
-    list.innerHTML = '';
+    var active = q('section.active ol');
 
-    // use the mining template for now.
-    var content = q('template.mining.row').content;
+    var content = q('template.fishing.row').content;
     resort(list, data.map(function(item, idx) {
       var li = q('li', content);
       Object.keys(item).forEach(function(key) {
@@ -173,9 +204,13 @@ if (
       li.dataset.id = idx;
       q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
       q('.name', li).textContent = item.name;
-      q('.location', li).textContent = item.loc || item.location;
+      q('.location', li).textContent = item.location;
 
-      return document.importNode(content, true).firstElementChild;
+      var item = document.importNode(content, true).firstElementChild;
+      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]').length)
+        active.appendChild(item.cloneNode(true));
+
+      return item;
     }), sorts.default);
   }
 
@@ -221,7 +256,7 @@ if (
    */
   function hash() {
     var enc = encodeba(
-      qa('li[data-nodeid]'),
+      qa('section[data-sectionid] li[data-nodeid]'),
       function(elem) { return elem.classList.contains('selected'); },
       function(elem) { return Number(elem.dataset.nodeid); }
     );
