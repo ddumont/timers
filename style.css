@@ -173,7 +173,15 @@ section.ads {
   display: flex;
   flex-direction: column;
   text-align: center;
+  min-height: 600px;
 }
 section.ads > div {
   padding: 4px 0;
+  max-width: 160px;
+}
+section.ads .beg {
+  text-align: left;
+  position: absolute;
+  top: calc(50% - 120px);
+  color: #D74D35;
 }
