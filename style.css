@@ -14,9 +14,12 @@ body.unsupported main.unsupported-message {
 main {
   display: flex;
   flex-wrap: wrap;
-  max-width: calc(100% - 400px);
+  max-width: calc(100% - 350px);
   margin: auto;
   justify-content: center;
+}
+h1 {
+  margin-left: 2.5px;
 }
 img.github {
   position: absolute;
@@ -27,9 +30,10 @@ img.github {
 ol {
   list-style: none;
   background-color: #F8F8F8;
-  margin: 0;
+  margin: 0 2.5px;
   padding: 5px;
-  border: solid #E1E1E1 1px;
+  border: solid #D1D1D1 1px;
+  border-radius: 8px;
 }
 li {
   cursor: pointer;
@@ -48,11 +52,11 @@ li.selected:hover {
 
 .clock {
   position: fixed;
-  transform: translateX(-190px);
+  transform: translateX(-175px);
   width: 170px;
 }
 .clock .time {
-  font-size: 20pt;
+  font-size: x-large;
   text-align: right;
 }
 .clock .game {
@@ -71,7 +75,8 @@ li .time {
 }
 li .name {
   flex-grow: 1;
+  padding-right: 3em;
 }
 li .location {
-
+  font-size: x-small;
 }

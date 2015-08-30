@@ -108,7 +108,9 @@ if (
       li.dataset.id = idx;
       q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
       q('.name', li).textContent = item.name;
-      q('.location', li).textContent = item.location;
+      var location = q('.location', li);
+      location.textContent = item.location;
+      location.title = location.alt = item.location;
 
       return document.importNode(content, true).firstElementChild;
     }), sorts.default);
@@ -128,7 +130,7 @@ if (
       li.dataset.id = idx;
       q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
       q('.name', li).textContent = item.name;
-      q('.location', li).textContent = item.location;
+      q('.location', li).textContent = item.loc || item.location;
 
       return document.importNode(content, true).firstElementChild;
     }), sorts.default);
@@ -148,7 +150,7 @@ if (
       li.dataset.id = idx;
       q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
       q('.name', li).textContent = item.name;
-      q('.location', li).textContent = item.location;
+      q('.location', li).textContent = item.loc || item.location;
 
       return document.importNode(content, true).firstElementChild;
     }), sorts.default);
