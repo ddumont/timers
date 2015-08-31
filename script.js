@@ -173,7 +173,7 @@ if (
         var item = document.importNode(content, true).firstElementChild;
       else
         var item = content.firstElementChild.cloneNode(true);
-      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]').length)
+      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]', active).length)
         active.appendChild(item.cloneNode(true));
 
       return item;
@@ -200,7 +200,7 @@ if (
         var item = document.importNode(content, true).firstElementChild;
       else
         var item = content.firstElementChild.cloneNode(true);
-      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]').length)
+      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]', active).length)
         active.appendChild(item.cloneNode(true));
 
       return item;
@@ -227,7 +227,7 @@ if (
         var item = document.importNode(content, true).firstElementChild;
       else
         var item = content.firstElementChild.cloneNode(true);
-      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]').length)
+      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]', active).length)
         active.appendChild(item.cloneNode(true));
 
       return item;
