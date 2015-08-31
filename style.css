@@ -102,6 +102,7 @@ main section.active ol {
 main section.active ol li {
   padding: 0;
   display: none;
+  font-size: small;
 }
 main section.active ol li.selected {
   display: flex;
@@ -112,8 +113,8 @@ main section.active ol li.selected.active {
   background-color: #93C0E1;
 }
 main section.active ol li span {
-  padding: 0 2px;
-  font-size: x-small;
+  padding: 3px 0;
+  font-size: inherit;
 }
 main section.active ol li .name {
   display: none;
@@ -122,9 +123,13 @@ main section.active ol li .time {
   min-width: 0;
 }
 main section.active ol li .type {
+  padding-right: 2px;
   display: list-item;
-  width: 2em;
+  width: 1em;
   text-align: center;
+}
+main section.active ol li .location {
+  font-size: x-small;
 }
 
 main section.clock {
