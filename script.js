@@ -84,7 +84,11 @@ if (
         var duration = elem.dataset.duration;
         var active = duration - (day - delta) > 0;
         game.dataset.sort = Boolean(game.dataset.sort) || (active ^ elem.classList.contains('active'));
-        elem.classList.toggle('active', active);
+        if (active)
+          elem.classList.add('active');
+        else
+          elem.classList.remove('active');
+
         if (active)
           q('.time', elem).textContent = formatterhm.format((duration - (day - delta)) * 1000);
         else if (delta < twohr)
@@ -314,6 +318,15 @@ if (
       qa('section[data-sectionid="' + id + '"]').forEach(function(elem) {
         elem.classList.add('minimize');
       });
+    });
+  }
+
+  // IE is so lame...
+  var ua = window.navigator.userAgent;
+  if (ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1 || ua.indexOf('Edge/') > -1) {
+    qa('section.clock, section.active').forEach(function(elem) {
+      elem.style.left = '10px';
+      elem.style.transform = 'translateX(0px)';
     });
   }
 

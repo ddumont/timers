@@ -88,7 +88,8 @@ main section.minimize {
 
 main section.active {
   position: fixed;
-  transform: translate3d(-175px, 125px, 0);
+  top: 125px;
+  transform: translateX(-175px);
 }
 main section.active ol {
   max-width: 170px;
