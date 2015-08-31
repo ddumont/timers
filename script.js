@@ -4,7 +4,6 @@ if (
   !window.Intl.DateTimeFormat ||
   !("onhashchange" in window) ||
   !("history" in window) ||
-  !('content' in document.createElement('template')) ||
   !("classList" in document.createElement("_"))
 ) {
   document.body.className = "unsupported";
@@ -157,7 +156,8 @@ if (
     var list = q('section.mining ol');
     var active = q('section.active ol');
 
-    var content = q('template.mining.row').content;
+    var content = q('template.mining.row');
+    content = content.content || content;
     resort(list, data.map(function(item, idx) {
       var li = q('li', content);
       Object.keys(item).forEach(function(key) {
@@ -169,7 +169,10 @@ if (
       var location = q('.location', li);
       location.textContent = item.location;
 
-      var item = document.importNode(content, true).firstElementChild;
+      if ('content' in document.createElement('template'))
+        var item = document.importNode(content, true).firstElementChild;
+      else
+        var item = content.firstElementChild.cloneNode(true);
       if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]').length)
         active.appendChild(item.cloneNode(true));
 
@@ -181,7 +184,8 @@ if (
     var list = q('section.botany ol');
     var active = q('section.active ol');
 
-    var content = q('template.botany.row').content;
+    var content = q('template.botany.row');
+    content = content.content || content;
     resort(list, data.map(function(item, idx) {
       var li = q('li', content);
       Object.keys(item).forEach(function(key) {
@@ -192,7 +196,10 @@ if (
       q('.name', li).textContent = item.name;
       q('.location', li).textContent = item.location;
 
-      var item = document.importNode(content, true).firstElementChild;
+      if ('content' in document.createElement('template'))
+        var item = document.importNode(content, true).firstElementChild;
+      else
+        var item = content.firstElementChild.cloneNode(true);
       if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]').length)
         active.appendChild(item.cloneNode(true));
 
@@ -204,7 +211,8 @@ if (
     var list = q('section.fishing ol');
     var active = q('section.active ol');
 
-    var content = q('template.fishing.row').content;
+    var content = q('template.fishing.row');
+    content = content.content || content;
     resort(list, data.map(function(item, idx) {
       var li = q('li', content);
       Object.keys(item).forEach(function(key) {
@@ -215,7 +223,10 @@ if (
       q('.name', li).textContent = item.name;
       q('.location', li).textContent = item.location;
 
-      var item = document.importNode(content, true).firstElementChild;
+      if ('content' in document.createElement('template'))
+        var item = document.importNode(content, true).firstElementChild;
+      else
+        var item = content.firstElementChild.cloneNode(true);
       if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]').length)
         active.appendChild(item.cloneNode(true));
 
