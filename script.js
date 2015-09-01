@@ -174,7 +174,7 @@ if (
       location.textContent = item.location;
 
       if ('content' in document.createElement('template'))
-        var item = document.importNode(content, true).firstElementChild;
+        var item = q('li', document.importNode(content, true));
       else
         var item = content.firstElementChild.cloneNode(true);
       if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]', active).length)
@@ -201,7 +201,7 @@ if (
       q('.location', li).textContent = item.location;
 
       if ('content' in document.createElement('template'))
-        var item = document.importNode(content, true).firstElementChild;
+        var item = q('li', document.importNode(content, true));
       else
         var item = content.firstElementChild.cloneNode(true);
       if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]', active).length)
@@ -228,7 +228,7 @@ if (
       q('.location', li).textContent = item.location;
 
       if ('content' in document.createElement('template'))
-        var item = document.importNode(content, true).firstElementChild;
+        var item = q('li', document.importNode(content, true));
       else
         var item = content.firstElementChild.cloneNode(true);
       if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]', active).length)
