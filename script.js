@@ -170,8 +170,9 @@ if (
       li.dataset.id = idx;
       q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
       q('.name', li).textContent = item.name;
-      var location = q('.location', li);
-      location.textContent = item.location;
+      q('.location', li).textContent = item.location;
+      if (item.slot)
+        q('.slot', li).textContent = '[' + item.slot + ']';
 
       if ('content' in document.createElement('template'))
         var item = q('li', document.importNode(content, true));
@@ -199,6 +200,8 @@ if (
       q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
       q('.name', li).textContent = item.name;
       q('.location', li).textContent = item.location;
+      if (item.slot)
+        q('.slot', li).textContent = '[' + item.slot + ']';
 
       if ('content' in document.createElement('template'))
         var item = q('li', document.importNode(content, true));

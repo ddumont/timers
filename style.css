@@ -151,6 +151,9 @@ main section.active ol li .type {
   width: 1em;
   text-align: center;
 }
+main section.active ol li .slot {
+  display: none;
+}
 main section.active ol li .location {
   font-size: x-small;
 }
@@ -179,6 +182,12 @@ ol li .time, ol li .name, ol li .location {
 ol li .time {
   min-width: 4.5em;
   text-align: right;
+}
+ol li .slot {
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center;
+  color: #D74D35;
 }
 ol li .name {
   -webkit-box-flex: 1;
