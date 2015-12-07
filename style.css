@@ -237,3 +237,14 @@ section.ads .beg {
   top: calc(50% - 120px);
   color: #D74D35;
 }
+
+.notifications {
+  font-size: small;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+  margin-top: -10px;
+  font-style: italic;
+}

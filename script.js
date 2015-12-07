@@ -31,6 +31,20 @@ if (
     build();
   }
 
+  // Check for notifications
+  if ("Notification" in window) {
+    var notif = q('.notifications input');
+    if (Notification.permission === "granted")
+      notif.checked = true;
+    if (Notification.permission === "denied")
+      notif.disabled = true;
+    notif.addEventListener('click', notifyPermission);
+  } else {
+    qa('.notifications').forEach(function(elem) {
+      elem.parentNode.removeChild(elem);
+    });
+  }
+
   var local = q('.time.local');
   var game = q('.time.game');
   var formatterl = new Intl.DateTimeFormat(undefined, {
@@ -84,17 +98,31 @@ if (
         var duration = elem.dataset.duration;
         var active = duration - (day - delta) > 0;
         game.dataset.sort = Boolean(game.dataset.sort) || (active ^ elem.classList.contains('active'));
-        if (active)
+        if (active) // IE 10 is retarded, doesn't support classList.toggle's 3rd arg.
           elem.classList.add('active');
         else
           elem.classList.remove('active');
 
-        if (active)
+        if (active) {
           q('.time', elem).textContent = formatterhm.format((duration - (day - delta)) * 1000);
-        else if (delta < twohr)
+          if (elem.dataset.alarmed)
+            delete elem.dataset.alarmed;
+        } else if (delta < twohr) {
           q('.time', elem).textContent = formatterhm.format(delta * 1000);
-        else
+          if (q('.notifications > input:checked') && delta < twohr / 2 && !elem.dataset.alarmed) {
+            elem.dataset.alarmed = 'true';
+            var notification = new Notification(q('.location', elem).textContent, {
+              tag: elem.dataset.nodeid,
+              body: qa('section[data-sectionid] li[data-nodeid="' + elem.dataset.nodeid + '"]').map(function(elem) {
+                return qa('.slot,.name', elem).map(function(elem) { return elem.textContent; }).join(' ');
+              }).join('\n')
+            });
+          }
+        } else {
           q('.time', elem).textContent = hour + ':00';
+          if (elem.dataset.alarmed)
+            delete elem.dataset.alarmed;
+        }
       });
       if (Boolean(game.dataset.sort))
         resort(q('.active ol'), qa('.active li.selected'), sorts.timeleft);
@@ -171,8 +199,7 @@ if (
       q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
       q('.name', li).textContent = item.name;
       q('.location', li).textContent = item.location;
-      if (item.slot)
-        q('.slot', li).textContent = '[' + item.slot + ']';
+      q('.slot', li).textContent = '[' + (item.slot || '?') + ']';
 
       if ('content' in document.createElement('template'))
         var item = q('li', document.importNode(content, true));
@@ -200,8 +227,7 @@ if (
       q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
       q('.name', li).textContent = item.name;
       q('.location', li).textContent = item.location;
-      if (item.slot)
-        q('.slot', li).textContent = '[' + item.slot + ']';
+      q('.slot', li).textContent = '[' + (item.slot || '?') + ']';
 
       if ('content' in document.createElement('template'))
         var item = q('li', document.importNode(content, true));
@@ -322,6 +348,25 @@ if (
         elem.classList.add('minimize');
       });
     });
+  }
+
+  function notifyPermission(event) {
+    var notif = event.currentTarget;
+    if (notif.checked) {
+      if (Notification.permission !== "granted") {
+        notif.checked = false;
+        Notification.requestPermission(function (permission) {
+          if (permission === "granted")
+            notif.checked = true;
+          else
+            notif.disabled = true;
+        });
+      }
+    } else {
+      qa('*[data-alarmed]').forEach(function(elem) {
+        delete elem.dataset.alarmed;
+      })
+    }
   }
 
   // IE is so lame...
