@@ -82,6 +82,17 @@ if (
   try {
     // Start the web wokrer
     var worker = new Worker("worker.js");
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service.js').then(function(registration) {
+        registration.onupdatefound = function(event) {
+          console.log('Service update found...');
+          registration.update();
+          window.location.reload();
+        };
+      }).catch(console.error.bind(console));
+    }
+
     worker.onmessage = function(e) {
       local.textContent = formatterl.format(e.data[1]);
       game.textContent = formatter.format(e.data[2]);
@@ -111,12 +122,20 @@ if (
           q('.time', elem).textContent = formatterhm.format(delta * 1000);
           if (q('.notifications > input:checked') && delta < twohr / 2 && !elem.dataset.alarmed) {
             elem.dataset.alarmed = 'true';
-            var notification = new Notification(q('.location', elem).textContent, {
-              tag: elem.dataset.nodeid,
-              body: qa('section[data-sectionid] li[data-nodeid="' + elem.dataset.nodeid + '"]').map(function(elem) {
-                return qa('.slot,.name', elem).map(function(elem) { return elem.textContent; }).join(' ');
-              }).join('\n')
-            });
+
+            var title = q('.location', elem).textContent;
+            var tag = elem.dataset.nodeid + '-' + new Date().getTime();
+            var body = qa('section[data-sectionid] li[data-nodeid="' + elem.dataset.nodeid + '"]').map(function(elem) {
+              return qa('.slot,.name', elem).map(function(elem) { return elem.textContent; }).join(' ');
+            }).join('\n');
+
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.ready.then(function(registration) {
+                registration.active.postMessage({ type: 'notification', tag: tag, title: title, body: body });
+              });
+            } else {
+              new Notification(q('.location', elem).textContent, { tag: tag, body: body });
+            }
           }
         } else {
           q('.time', elem).textContent = hour + ':00';
