@@ -1,35 +1,28 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Router } from 'react-router';
-import App from './components/app';
-import createHistory from 'history/lib/createHashHistory';
+import './index.less'
 
-import calendarRoute from './routes/calendar';
-import courseRoute from './routes/course';
-import gradesRoute from './routes/grades';
-import messagesRoute from './routes/messages';
-import profileRoute from './routes/profile';
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
 
-import './stubs/COURSES';
-import './index.less';
+import App from './comps/app'
+import state from './state'
+import * as hActions from './actions/hash'
 
-var rootRoute = {
-  component: 'div',
-  name: 'home',
-  childRoutes: [{
-    path: '/',
-    component: App,
-    childRoutes: [
-      calendarRoute,
-      courseRoute,
-      gradesRoute,
-      messagesRoute,
-      profileRoute
-    ]
-  }]
-};
+function getHash(url) {
+  const match = /^[^#]*#(.*)$/.exec(url);
+  return match && match[1];
+}
+window.addEventListener('hashchange', event => {
+  store.dispatch(hActions.changed(getHash(event.newURL)));
+}, false);
+
+const store = state({
+  hash: getHash(window.location.hash)
+});
 
 render(
-  <Router history={createHistory()} routes={rootRoute} />,
-  document.getElementById('app')
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.querySelector('#container')
 );
