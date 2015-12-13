@@ -1,3 +1,5 @@
+import { toggle as btoggle } from './botany'
+import { toggle as ftoggle } from './fishing'
 import { toggle as mtoggle } from './mining'
 
 export const HASH_CHANGED = 'HASH_CHANGE'
@@ -11,17 +13,22 @@ export function update() {
   }
 }
 
-export function changed(hash) {
+export function changed(newhash) {
   return (dispatch, getState) => {
-    const { curhash, mining } = getState();
+    const { hash, botany, fishing, mining } = getState();
 
-    if (hash !== curhash) {
-      dispatch({ type: HASH_CHANGED, hash });
+    if (newhash !== hash) {
+      dispatch({ type: HASH_CHANGED, hash: newhash });
 
       const selected = decode(hash.split('|')[0]);
-      Object.keys(mining).forEach(
-        nodeid => dispatch(mtoggle(nodeid, selected[nodeid], true))
-      );
+      const toggles = [btoggle, ftoggle, mtoggle];
+      const lists   = [botany,  fishing, mining ];
+      lists.forEach( (list, tidx) => {
+        const toggle = toggles[tidx];
+        list.forEach(
+          ({nodeid}, idx) => dispatch(toggle(idx, selected[nodeid] || 0, true))
+        );
+      })
     }
   }
 }

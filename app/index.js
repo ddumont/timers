@@ -17,14 +17,11 @@ window.addEventListener('hashchange', event => {
   store.dispatch(hActions.changed(getHash(event.newURL)));
 }, false);
 
-const store = state({
-  mining: data.reduce((obj, node) => {
-    if (node.type === 'mining')
-      obj[node.nodeid] = node
-    return obj;
-  }, {}),
-  hash: getHash(window.location.hash)
-});
+const store = state(data.reduce((obj, node) => {
+  obj[node.type].push(node);
+  return obj;
+}, { botany: [], fishing: [],  mining: [], hash: '' }));
+store.dispatch(hActions.changed(getHash(window.location.hash)));
 
 render(
   <Provider store={store}>
