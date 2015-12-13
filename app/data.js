@@ -1,4 +1,4 @@
-var data = (function() {
+export default (function() {
   var MINUTES = 60;
   var HOURS = 60*60
   var STD = 3*HOURS;

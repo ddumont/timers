@@ -1,10 +1,20 @@
-import { MINING_NODE_ON } from '../actions/mining'
+import { MINING_NODE_ON, MINING_NODE_OFF } from '../actions/mining'
 
-export default function mining(state = 0, action) {
-  switch (action.type) {
+export default function mining(state = {}, action) {
+  const newstate = {};
+  const { type, nodeid } = action;
+
+  switch (type) {
     case MINING_NODE_ON:
-      console.log(action.payload);
-      return state; // do nothing..yet
+      newstate[nodeid] = Object.assign({}, state[nodeid], {
+        selected: 1
+      });
+      return Object.assign({}, state, newstate);
+    case MINING_NODE_OFF:
+      newstate[nodeid] = Object.assign({}, state[nodeid], {
+        selected: 0
+      });
+      return Object.assign({}, state, newstate);
     default:
       return state
   }

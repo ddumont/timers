@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 
 import App from './comps/app'
 import state from './state'
+import data from './data'
 import * as hActions from './actions/hash'
 
 function getHash(url) {
@@ -17,6 +18,11 @@ window.addEventListener('hashchange', event => {
 }, false);
 
 const store = state({
+  mining: data.reduce((obj, node) => {
+    if (node.type === 'mining')
+      obj[node.nodeid] = node
+    return obj;
+  }, {}),
   hash: getHash(window.location.hash)
 });
 
