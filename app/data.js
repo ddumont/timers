@@ -1,3 +1,5 @@
+import hash from 'es-hash'
+
 export default (function() {
   var MINUTES = 60;
   var HOURS = 60*60
@@ -48,16 +50,16 @@ export default (function() {
       "duration": HW,
     },{
       "type": "mining",
-      "name": "Azys Lla: Adamantite Ore",
+      "name": "Adamantite Ore",
       "slot": 6,
-      "location": "Sea of Clouds",
+      "location": "Azys Lla",
       "time": "23:00",
       "duration": HW,
     },{
       "type": "mining",
-      "name": "Azys Lla: Adamantite Ore",
+      "name": "Adamantite Ore",
       "slot": 6,
-      "location": "Sea of Clouds",
+      "location": "Azys Lla",
       "time": "11:00",
       "duration": HW,
     },{
@@ -1189,17 +1191,14 @@ export default (function() {
     return Number(match[1]) * 60 * 60 + Number(match[2]) * 60;
   }
 
-  var refs = {};
-  var id = 1;
-  ret.forEach(function(item) {
-    // compute nodeid
-    var key = [item.time, item.type, item.location].join('|');
-    if (!refs[key]) refs[key] = id++;
-    item.nodeid = refs[key];
+  ret.forEach(item => {
+    const {time, type, location} = item;
+    item.nodeid = hash({time, type, location});
+    item.key = hash(item);
 
     // convert time to seconds elapsed in day
-    if (item.time)
-      item.time = convert(item.time);
+    if (time)
+      item.time = convert(time);
   });
 
   return ret;

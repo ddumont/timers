@@ -67,9 +67,6 @@ if (
       if (delta !== 0) return delta;
       return Number(a.dataset.slot) - Number(b.dataset.slot);
     },
-    'nodeid': function(a,b) {
-      return Number(a.dataset.nodeid) - Number(b.dataset.nodeid);
-    },
     'timeleft': function(a,b) {
       var aa = a.classList.contains('active') ? 0 : 1;
       var ab = b.classList.contains('active') ? 0 : 1;

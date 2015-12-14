@@ -11,6 +11,8 @@
     "start": "nws -d public:. -p 8080"
   },
   "dependencies": {
+    "autoprefixer": "^6.1.2",
+    "es-hash": "^1.0.4",
     "history": "1.13.x",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",

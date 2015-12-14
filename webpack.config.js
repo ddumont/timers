@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'eval-inline-source-map',
@@ -21,9 +22,12 @@ module.exports = {
       loader: 'babel'
     }, {
       test: /\.less$/,
-      loader: 'style!css!less'
+      loader: 'style!css!postcss!less'
     }]
   },
+  postcss: [
+    autoprefixer({ browsers: ['last 2 versions'] })
+  ],
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
