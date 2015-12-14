@@ -7,7 +7,7 @@ export default (function() {
   var HW = 55*MINUTES;
 
   // Never change the order of these objects, only append new ones on to the end
-  // @see nodeid below, and hash() in script.js
+  // @see item.hashidx below
   var ret = [{
       "type": "mining",
       "name": "Abalathian Rock Salt",
