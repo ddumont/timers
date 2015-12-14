@@ -1,19 +1,24 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import * as mActions from '../actions/mining'
-import Mining from './mining'
+
+import Botany  from './botany'
+import Fishing from './fishing'
+import Mining  from './mining'
 
 import './app.less';
 
 class App extends Component {
   render() {
-    const { hash, mining } = this.props;
-    
+    const { hash, mining, botany, fishing } = this.props;
+
     return (
       <div className="app">
-        {hash}
-        <Mining mining={mining} />
+        <Mining  mining={mining}  />
+        <Botany  botany={botany}  />
+        <Fishing fishing={fishing} />
       </div>
     );
   }
