@@ -18,7 +18,7 @@ export default class Node extends Component {
 
   render() {
     const { node } = this.props;
-    const { type } = node;
+    const { type, name, location } = node;
     const time = formatter.format(new Date(node.time * 1000));
     const slot = '[' + (node.slot || '?') + ']';
 
@@ -31,8 +31,8 @@ export default class Node extends Component {
       <li className={classes}>
         <span className="time">{time}</span>
         <span className="slot">{slot}</span>
-        <span className="name">{node.name}</span>
-        <span className="location">{node.location}</span>
+        <span className="name">{name}</span>
+        <span className="location">{location}</span>
       </li>
     )
   }
