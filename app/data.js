@@ -1191,10 +1191,16 @@ export default (function() {
     return Number(match[1]) * 60 * 60 + Number(match[2]) * 60;
   }
 
-  ret.forEach(item => {
+  var idx = 1;
+  const cache = {};
+  ret.forEach((item) => {
     const {time, type, location} = item;
     item.nodeid = hash({time, type, location});
     item.key = hash(item);
+
+    if (!cache[item.nodeid])
+      cache[item.nodeid] = idx++;
+    item.hashidx = cache[item.nodeid];
 
     // convert time to seconds elapsed in day
     if (time)

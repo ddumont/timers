@@ -20,13 +20,13 @@ export function changed(newhash) {
     if (newhash !== hash) {
       dispatch({ type: HASH_CHANGED, hash: newhash });
 
-      const selected = decode(hash.split('|')[0]);
+      const selected = decode(newhash.split('|')[0]);
       const toggles = [btoggle, ftoggle, mtoggle];
       const lists   = [botany,  fishing, mining ];
       lists.forEach( (list, tidx) => {
         const toggle = toggles[tidx];
         list.forEach(
-          ({nodeid}, idx) => dispatch(toggle(idx, selected[nodeid] || 0, true))
+          ({nodeid, hashidx}, idx) => dispatch(toggle(idx, selected[hashidx] || 0, true))
         );
       })
     }

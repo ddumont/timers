@@ -1,0 +1,43 @@
+li.node {
+  cursor: pointer;
+  display: flex;
+  padding: 2px;
+
+  &:hover {
+    background-color: #93C0E1;
+  }
+  &.selected {
+    background-color: #6B99C1;
+  }
+  &.selected:hover {
+    background-color: #307DAF;
+  }
+
+  .time, .name, .location {
+    padding: 2px 4px;
+  }
+
+  .time {
+    min-width: 4.5em;
+    text-align: right;
+  }
+
+  .slot {
+    align-self: center;
+    color: #7F1D0B;
+  }
+
+  .name {
+    flex-grow: 1;
+  }
+
+  .location {
+    font-size: x-small;
+    flex: 1 1 auto;
+    text-align: right;
+  }
+
+  .type {
+    display: none;
+  }
+}

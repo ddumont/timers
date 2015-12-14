@@ -1,18 +1,51 @@
-section {
-  ol {
-    list-style: none;
-    background-color: #F8F8F8;
-    margin: 0 2.5px;
-    padding: 5px;
-    border: solid #D1D1D1 1px;
-    border-radius: 8px;
-    overflow: hidden;
-    min-width: 25em;
+main {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: ~"calc(100% - 250px)";
+  margin: auto;
+  justify-content: center;
+  align-items: flex-start;
 
-    li {
-      cursor: pointer;
-      display: flex;
-      padding: 2px;
+  section {
+    ol {
+      list-style: none;
+      background-color: #F8F8F8;
+      margin: 0 2.5px;
+      padding: 5px;
+      border: solid #D1D1D1 1px;
+      border-radius: 8px;
+      overflow: hidden;
+      min-width: 25em;
     }
   }
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 5px 135px 5px 5px;
+  background-color: #F8F8F8;
+  border-bottom: solid #D1D1D1 1px;
+  border-left: solid #D1D1D1 1px;
+  border-bottom-left-radius: 8px;
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      display: inline-block;
+      padding: 0 5px;
+      a {
+        color: #D74D35;
+      }
+    }
+  }
+}
+
+img.github {
+  position: fixed;
+  top: 0;
+  right: 0;
+  border: 0;
 }

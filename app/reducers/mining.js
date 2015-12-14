@@ -7,12 +7,12 @@ export default function mining(state = {}, action) {
   switch (type) {
     case MINING_NODE_ON:
       newstate[idx] = Object.assign({}, state[idx], {
-        selected: 1
+        selected: true
       });
       return newstate;
     case MINING_NODE_OFF:
       newstate[idx] = Object.assign({}, state[idx], {
-        selected: 0
+        selected: false
       });
       return newstate;
     default:

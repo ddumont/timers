@@ -6,10 +6,9 @@ export function toggle(idx, value = 'TOGGLE', fromHash) {
     const { selected } = getState().mining[idx];
     if (value === 'TOGGLE')
       value = !selected;
-      
-    if( value !== (selected || 0) ) {
+
+    if( value !== selected ) {
       dispatch( value ? on(idx, fromHash) : off(idx, fromHash) );
-      console.log(idx, value);
     }
   }
 }
