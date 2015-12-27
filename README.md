@@ -1,4 +1,4 @@
-Great way to test with node:
+Development
 ```
-http-server -p 8081
+npm start:dev
 ```
