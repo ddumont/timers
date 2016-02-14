@@ -1,18 +1,19 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import * as mActions from '../actions/mining'
+import * as mActions from '../actions/mining';
 
-import Botany  from './botany'
-import Fishing from './fishing'
-import Mining  from './mining'
+import Botany  from './botany';
+import Fishing from './fishing';
+import Mining  from './mining';
+import Clock from './clock';
 
 import './app.less';
 
 class App extends Component {
   render() {
-    const { hash, mining, botany, fishing } = this.props;
+    const { hash, mining, botany, fishing, worker } = this.props;
 
     return (
       <div className="app">
@@ -30,14 +31,11 @@ class App extends Component {
                data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" />
         </a>
         <main>
-          <section className="clock">
-            <dl>
-              <dt className="local">Local Time</dt>
-              <dd className="time local"></dd>
-              <dt className="game">Eorzea Time</dt>
-              <dd className="time game"></dd>
-            </dl>
+          <section className="clocks">
+            <Clock worker={worker} />
+            <Clock worker={worker} type="Eorzea" />
           </section>
+
           <Mining  mining ={mining}  />
           <Botany  botany ={botany}  />
           <Fishing fishing={fishing} />

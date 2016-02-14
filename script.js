@@ -93,6 +93,7 @@ if (
     worker.onmessage = function(e) {
       local.textContent = formatterl.format(e.data[1]);
       game.textContent = formatter.format(e.data[2]);
+
       var hour = formatterh.format(e.data[2]);
       var now = Math.floor(e.data[2].getTime() / 1000) % (day);
       qa('.active li.selected').forEach(function(elem) {

@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react'
-import classNames from 'classnames'
+import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
 
-import * as bActions from '../actions/botany'
-import * as fActions from '../actions/fishing'
-import * as mActions from '../actions/mining'
+import * as bActions from '../actions/botany';
+import * as fActions from '../actions/fishing';
+import * as mActions from '../actions/mining';
 
 import './node.less';
 

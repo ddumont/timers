@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react'
-import Node from './node'
+import React, { Component, PropTypes } from 'react';
+import Node from './node';
 
 export default class Fishing extends Component {
   render() {

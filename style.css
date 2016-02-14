@@ -70,24 +70,6 @@ main section.active ol li .location {
   font-size: x-small;
 }
 
-main section.clock {
-  position: fixed;
-  -webkit-transform: translateX(-175px);
-      -ms-transform: translateX(-175px);
-          transform: translateX(-175px);
-  width: 170px;
-}
-main section.clock .time {
-  font-size: x-large;
-  text-align: right;
-}
-main section.clock .game {
-  font-weight: bold;
-  color: #D74D35;
-}
-main section.clock .local {
-  color: #2E7FB4
-}
 section.ads {
   position: fixed;
   bottom: 0;
