@@ -1179,6 +1179,13 @@ var data = (function() {
       "location": "South Bloodshore",
       "time": "23:00",
       "duration": STD,
+    },{
+      "type": "mining",
+      "name": "Astral Moraine",
+      "slot": 3,
+      "location": "Coerthas W. Highlands",
+      "time": "5:00",
+      "duration": HW,
     }
   ];
 
