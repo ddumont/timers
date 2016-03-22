@@ -13,7 +13,7 @@ import './app.less';
 
 class App extends Component {
   render() {
-    const { hash, mining, botany, fishing, worker } = this.props;
+    const { hash, mining, botany, fishing, clock } = this.props;
 
     return (
       <div className="app">
@@ -32,8 +32,8 @@ class App extends Component {
         </a>
         <main>
           <section className="clocks">
-            <Clock worker={worker} />
-            <Clock worker={worker} type="Eorzea" />
+            <Clock clock={clock} />
+            <Clock clock={clock} type="Eorzea" />
           </section>
 
           <Mining  mining ={mining}  />

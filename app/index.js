@@ -8,6 +8,7 @@ import App from './comps/app';
 import state from './state';
 import data from './data';
 import * as hActions from './actions/hash';
+import * as cActions from './actions/clock';
 
 import Worker from 'worker!./worker.js';
 import serviceWorker from 'serviceworker!./worker.js';
@@ -23,24 +24,11 @@ window.addEventListener('hashchange', event => {
   store.dispatch(hActions.changed(getHash(event.newURL)));
 }, false);
 
-let worker;
-try {
-  serviceWorker().then(registration => {
-    registration.onupdatefound = function(event) {
-      console.log('Service update found...');
-      registration.update();
-      window.location.reload();
-    };
-  });
-} catch (e) {
-  worker = new Worker();
-}
-
 // process data
 const processed = data.reduce((obj, node) => {
   obj[node.type].push(node);
   return obj;
-}, { botany: [], fishing: [],  mining: [], hash: '', worker: worker });
+}, { botany: [], fishing: [],  mining: [], hash: '', clock: {} });
 
 // sort nodes
 Object.keys(processed).forEach(key => {
@@ -57,6 +45,29 @@ Object.keys(processed).forEach(key => {
 
 const store = state(processed);
 store.dispatch(hActions.changed(getHash(window.location.hash)));
+
+const tick = event => {
+  const [message, now, eorzea, elapsed] = event.data;
+  if (message === 'tick') {
+    store.dispatch(cActions.tick(now, eorzea, elapsed));
+  }
+};
+try {
+  serviceWorker().then(registration => {
+    navigator.serviceWorker.addEventListener('message', event => {
+      event.source === registration.active && tick(event);
+    });
+
+    registration.onupdatefound = function(event) {
+      console.log('Service update found...');
+      registration.update();
+      window.location.reload();
+    };
+  });
+} catch (e) {
+  window.worker = new Worker();
+  worker.addEventListener('message', tick);
+}
 
 render(
   <Provider store={store}>

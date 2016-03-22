@@ -3,41 +3,24 @@ import classNames from 'classnames';
 
 import './clock.less';
 
-const formatterl = new Intl.DateTimeFormat(undefined, {
+const local = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric', minute: 'numeric'
 });
-const formatter = new Intl.DateTimeFormat(undefined, {
+const game = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric', minute: 'numeric', timeZone: 'UTC'
 });
 
 class Clock extends Component {
-
-  componentDidMount() {
-    const {worker} = this.props;
-
-    if (worker) {
-      worker.addEventListener('message', event => this.onMessage(event));
-    } else {
-      try {
-        navigator.serviceWorker.addEventListener('message', event => this.onMessage(event));
-      } catch (e) {
-        console.error('Service workers are not supported.', e);
-      }
-    }
-  }
-
-  onMessage({data}) {
-    const {type} = this.props;
-
-    if (data[0] === 'tick') {
-      this.setState({time: type === 'Eorzea' ? data[2] : data[1]});
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.clock !== nextProps.clock;
   }
 
   render() {
-    const {type} = this.props;
-    const {time} = this.state || {};
-    const date = new Date(time || 0);
+    const { now, eorzea, elapsed } = this.props.clock;
+    const { type } = this.props;
+    const time = type === 'Eorzea' ?
+      game.format(new Date(eorzea || 0)) : local.format(new Date(now || 0));
+
     const classes = classNames({
       clock: true,
       game: type === 'Eorzea'
@@ -46,7 +29,7 @@ class Clock extends Component {
     return (
       <div className={classes}>
         <h4>{ type } time:</h4>
-        <div className="time">{ type === 'Eorzea' ? formatter.format(date) : formatterl.format(date) }</div>
+        <div className="time">{ time }</div>
       </div>
     )
   }
