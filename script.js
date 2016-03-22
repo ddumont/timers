@@ -81,7 +81,7 @@ if (
   var twohr = 2 * 60 * 60;
   try {
     // Start the web wokrer
-    var worker = new Worker("worker.js");
+    var worker = window.worker = new Worker("worker.js");
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service.js').then(function(registration) {
