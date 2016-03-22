@@ -1,4 +1,4 @@
 Development
 ```
-npm start:dev
+npm run start:dev
 ```
