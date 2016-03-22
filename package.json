@@ -13,6 +13,7 @@
   "dependencies": {
     "classnames": "^2.2.3",
     "es-hash": "^1.0.4",
+    "lodash.debounce": "^4.0.3",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.1",
@@ -36,7 +37,6 @@
     "ghooks": "^1.0.3",
     "less": "^2.6.1",
     "less-loader": "^2.2.2",
-    "lodash": "^4.6.1",
     "nws": "^1.1.1",
     "postcss-loader": "^0.8.2",
     "rimraf": "^2.5.2",

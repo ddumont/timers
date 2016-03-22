@@ -1,17 +1,29 @@
+import * as hActions from './hash';
+import debounce from 'lodash.debounce';
+
 export const MINING_NODE_ON = 'MINING_NODE_ON'
 export const MINING_NODE_OFF = 'MINING_NODE_OFF'
 
-export function toggle(idx, value = 'TOGGLE', fromHash) {
+const updateHash = debounce((dispatch) => dispatch(hActions.update()), 50);
+
+export function toggle(idx, value, fromHash) {
   return (dispatch, getState) => {
-    const { selected } = getState().mining[idx];
-    if (value === 'TOGGLE')
-      value = !selected;
+    const { mining } = getState();
+    const { selected, hashidx } = mining[idx];
 
     if( value !== selected ) {
-      dispatch( value ? on(idx, fromHash) : off(idx, fromHash) );
+      mining.filter((node, idx) => {
+        if (hashidx === node.hashidx) {
+          dispatch( value ? on(idx, fromHash) : off(idx, fromHash) );
+        }
+      });
     }
+    
+    if (!fromHash)
+      updateHash(dispatch);
   }
 }
+
 
 export function on(idx, fromHash) {
   return { type: MINING_NODE_ON, idx };

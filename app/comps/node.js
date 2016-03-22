@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import * as bActions from '../actions/botany';
@@ -11,14 +12,28 @@ const formatter = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric', minute: 'numeric', timeZone: 'UTC'
 });
 
-export default class Node extends Component {
+const actionmap = {
+  botany: bActions,
+  fishing: fActions,
+  mining: mActions
+};
+
+class Node extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.node !== nextProps.node;
   }
 
+  click() {
+    const { idx, node, dispatch } = this.props;
+    const { type, selected } = node;
+    if (actionmap[type]) {
+      dispatch(actionmap[type].toggle(idx, !selected));
+    }
+  }
+
   render() {
     const { node } = this.props;
-    const { type, name, location } = node;
+    const { name, location } = node;
     const time = formatter.format(new Date(node.time * 1000));
     const slot = '[' + (node.slot || '?') + ']';
 
@@ -28,7 +43,7 @@ export default class Node extends Component {
     });
 
     return (
-      <li className={classes}>
+      <li className={classes} onClick={event => this.click(event)}>
         <span className="time">{time}</span>
         <span className="slot">{slot}</span>
         <span className="name">{name}</span>
@@ -37,3 +52,5 @@ export default class Node extends Component {
     )
   }
 }
+
+export default connect()(Node)
