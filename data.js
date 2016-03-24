@@ -1182,7 +1182,7 @@ var data = (function() {
     },{
       "type": "mining",
       "name": "Astral Moraine",
-      "slot": 3,
+      "slot": 4,
       "location": "Coerthas W. Highlands",
       "time": "5:00",
       "duration": HW,
