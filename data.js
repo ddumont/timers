@@ -1186,6 +1186,13 @@ var data = (function() {
       "location": "Coerthas W. Highlands",
       "time": "5:00",
       "duration": HW,
+    },{
+      "type": "mining",
+      "name": "Violet Quartz",
+      "slot": 6,
+      "location": "Coerthas W. Highlands",
+      "time": "7:00",
+      "duration": HW,
     }
   ];
 
