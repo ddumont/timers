@@ -725,12 +725,14 @@ var data = (function() {
     },{
       "type": "botany",
       "name": "Chysahl Greens",
+      "slot": 6,
       "location": "Coerthas W. Highlands",
       "time": "9:00",
       "duration": HW,
     },{
       "type": "botany",
       "name": "Chysahl Greens",
+      "slot": 6,
       "location": "Coerthas W. Highlands",
       "time": "21:00",
       "duration": HW,
