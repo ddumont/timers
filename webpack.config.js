@@ -4,6 +4,7 @@ var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 
 module.exports = {
+  devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
     './app'
