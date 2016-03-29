@@ -6,13 +6,23 @@ main {
   justify-content: center;
   align-items: flex-start;
 
-  section.clocks {
+  section.side {
     position: fixed;
     transform: translateX(-175px);
     width: 170px;
+    h4 {
+      margin: 0.5em 0;
+    }
   }
 
-  section {
+  section.clocks {
+    margin-top: 0.5em;
+  }
+  section.watch {
+    margin-top: 10em;
+  }
+
+  section.mining, section.botany, section.fishing {
     ol {
       list-style: none;
       background-color: #F8F8F8;

@@ -8,6 +8,7 @@ import Botany  from './botany';
 import Fishing from './fishing';
 import Mining  from './mining';
 import Clock from './clock';
+import Watch from './watch';
 
 import './app.less';
 
@@ -31,13 +32,14 @@ class App extends Component {
                data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" />
         </a>
         <main>
-          <section className="clocks">
+          <section className="clocks side">
             <Clock clock={clock} />
             <Clock clock={clock} type="Eorzea" />
           </section>
+          <Watch className="side" clock={clock} mining={mining} botany={botany} fishing={fishing} />
 
-          <Mining  mining ={mining}  />
-          <Botany  botany ={botany}  />
+          <Mining mining={mining} />
+          <Botany botany={botany} />
           <Fishing fishing={fishing} />
         </main>
       </div>

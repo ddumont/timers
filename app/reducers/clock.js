@@ -1,11 +1,13 @@
 import { CLOCK_TICK } from '../actions/clock';
 
 export default function fishing(state = {}, action) {
-  const { type, now, eorzea, elapsed } = action;
+  const { type, now, eorzea, elapsed, eorzea_h } = action;
 
   switch (type) {
     case CLOCK_TICK:
-      return { now, eorzea, elapsed };
+      const newstate = { now, eorzea, elapsed };
+      newstate.eorzea_h = state.eorzea_h != eorzea_h ? state.eorzea_h : eorzea_h;
+      return newstate;
     default:
       return state;
   }

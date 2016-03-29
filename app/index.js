@@ -54,7 +54,11 @@ const tick = event => {
 };
 try {
   serviceWorker().then(registration => {
-    navigator.serviceWorker.addEventListener('message', event => {
+    window.worker = navigator.serviceWorker;
+    worker.ready.then(function(foo) {
+      debugger;
+    });
+    worker.addEventListener('message', event => {
       event.source === registration.active && tick(event);
     });
 
