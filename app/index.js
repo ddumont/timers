@@ -10,8 +10,8 @@ import data from './data';
 import * as hActions from './actions/hash';
 import * as cActions from './actions/clock';
 
-import Worker from 'worker!./worker.js';
-import serviceWorker from 'serviceworker!./worker.js';
+import Worker from 'worker!./webworker.js';
+import serviceWorker from 'serviceworker!./svcworker.js';
 
 import './index.less';
 
@@ -52,16 +52,9 @@ const tick = event => {
     store.dispatch(cActions.tick(now, eorzea, elapsed));
   }
 };
+
 try {
   serviceWorker().then(registration => {
-    window.worker = navigator.serviceWorker;
-    worker.ready.then(function(foo) {
-      debugger;
-    });
-    worker.addEventListener('message', event => {
-      event.source === registration.active && tick(event);
-    });
-
     registration.onupdatefound = function(event) {
       console.log('Service update found...');
       registration.update();
@@ -69,9 +62,11 @@ try {
     };
   });
 } catch (e) {
-  window.worker = new Worker();
-  worker.addEventListener('message', tick);
+  console.error(e);
 }
+
+window.worker = new Worker();
+worker.addEventListener('message', tick);
 
 render(
   <Provider store={store}>
