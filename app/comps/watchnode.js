@@ -3,6 +3,8 @@ import classNames from 'classnames';
 
 import './watchnode.less';
 
+const day = 60 * 60 * 24;
+
 const formatter = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric',  minute: 'numeric', timeZone: 'UTC', hour12: false
 });
@@ -15,17 +17,23 @@ export default class WatchNode extends Component {
 
   render() {
     const { node, clock } = this.props;
-    const { eorzea, elapsed } = clock;
+    const { eorzea } = clock;
     const { location } = node;
-    
-    const time = formatter.format(new Date((node.time - (elapsed || 0)) * 1000));
+    const elapsed = clock.elapsed || 0;
+
+    const diff = (day + node.time - elapsed) % day;
+    const spawn = eorzea - elapsed + node.time;
+    const despawn = spawn + node.duration;
+    const time = formatter.format(new Date(diff * 1000));
+
 
     const classes = classNames({
-      watchnode: true
+      watchnode: true,
+      active: spawn < eorzea && eorzea < despawn
     });
 
     return (
-      <li className={classes} onClick={event => this.click(event)}>
+      <li className={classes}>
         <span className="type">{node.type.substring(0,1)}</span>
         <span className="time">{time}</span>
         <span className="location">{location}</span>

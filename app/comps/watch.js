@@ -8,24 +8,21 @@ const day = 60 * 60 * 24;
 export default class Watch extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { mining, botany, clock } = this.props;
-
-    return mining !== nextProps.mining || botany !== nextProps.botany ||
-           clock !== nextProps.clock;
+    const { clock, selected } = this.props;
+    return selected !== nextProps.selected || clock !== nextProps.clock;
   }
 
   render() {
-    const { mining, botany, clock } = this.props;
+    const { clock, selected } = this.props;
     const elapsed = clock.elapsed || 0;
 
     const classes = classNames(
       ['watch'].concat(this.props.className.split(/\s+/))
     );
 
-    const nodes = mining.filter(node => node.selected)
-    .concat(botany.filter(node => node.selected))
-    .sort((a, b) => {
-      return ((day + a.time - elapsed) % day) - ((day + b.time - elapsed) % day);
+    const nodes = Object.keys(selected).map(key => selected[key]);
+    nodes.sort((a, b) => {
+      return ((day + a.time + a.duration - elapsed) % day) - ((day + b.time + b.duration - elapsed) % day);
     });
 
     return (
