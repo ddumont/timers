@@ -1,6 +1,6 @@
 import { CLOCK_TICK } from '../actions/clock';
 
-export default function fishing(state = {}, action) {
+export default function clock(state = {}, action) {
   const { type, now, eorzea, elapsed, eorzea_h } = action;
 
   switch (type) {

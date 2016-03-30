@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import * as mActions from '../actions/mining';
 
 import Botany  from './botany';
-import Fishing from './fishing';
 import Mining  from './mining';
 import Clock from './clock';
 import Watch from './watch';
@@ -14,7 +13,7 @@ import './app.less';
 
 class App extends Component {
   render() {
-    const { hash, mining, botany, fishing, clock } = this.props;
+    const { hash, mining, botany, clock } = this.props;
 
     return (
       <div className="app">
@@ -22,7 +21,6 @@ class App extends Component {
           <ul>
             <li><a href="javascript: void 0;">Mining</a></li>
             <li><a href="javascript: void 0;">Botany</a></li>
-            <li><a href="javascript: void 0;">Fishing</a></li>
           </ul>
         </nav>
         <a href="https://github.com/ddumont/timers">
@@ -36,11 +34,10 @@ class App extends Component {
             <Clock clock={clock} />
             <Clock clock={clock} type="Eorzea" />
           </section>
-          <Watch className="side" clock={clock} mining={mining} botany={botany} fishing={fishing} />
+          <Watch className="side" clock={clock} mining={mining} botany={botany} />
 
           <Mining mining={mining} />
           <Botany botany={botany} />
-          <Fishing fishing={fishing} />
         </main>
       </div>
     );

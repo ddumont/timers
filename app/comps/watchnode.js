@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
-// import './node.less';
+import './watchnode.less';
 
 const formatter = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric',  minute: 'numeric', timeZone: 'UTC', hour12: false
@@ -17,7 +17,7 @@ export default class WatchNode extends Component {
     const { node, clock } = this.props;
     const { eorzea, elapsed } = clock;
     const { location } = node;
-
+    
     const time = formatter.format(new Date((node.time - (elapsed || 0)) * 1000));
 
     const classes = classNames({
@@ -26,6 +26,7 @@ export default class WatchNode extends Component {
 
     return (
       <li className={classes} onClick={event => this.click(event)}>
+        <span className="type">{node.type.substring(0,1)}</span>
         <span className="time">{time}</span>
         <span className="location">{location}</span>
       </li>

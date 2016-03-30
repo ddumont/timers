@@ -167,9 +167,6 @@ if (
     botany(data.filter(function(item) {
       return item.type === 'botany';
     }));
-    fishing(data.filter(function(item) {
-      return item.type === 'fishing';
-    }));
 
     qa('section[data-sectionid] li[data-nodeid]').forEach(function(node, idx) {
       node.addEventListener('click', function(e) {
@@ -245,33 +242,6 @@ if (
       q('.name', li).textContent = item.name;
       q('.location', li).textContent = item.location;
       q('.slot', li).textContent = '[' + (item.slot || '?') + ']';
-
-      if ('content' in document.createElement('template'))
-        var item = q('li', document.importNode(content, true));
-      else
-        var item = content.firstElementChild.cloneNode(true);
-      if (!qa('li[data-nodeid="' + li.dataset.nodeid + '"]', active).length)
-        active.appendChild(item.cloneNode(true));
-
-      return item;
-    }), sorts.default);
-  }
-
-  function fishing(data) {
-    var list = q('section.fishing ol');
-    var active = q('section.active ol');
-
-    var content = q('template.fishing.row');
-    content = content.content || content;
-    resort(list, data.map(function(item, idx) {
-      var li = q('li', content);
-      Object.keys(item).forEach(function(key) {
-        li.dataset[key] = item[key];
-      });
-      li.dataset.id = idx;
-      q('.time', li).textContent = formatter.format(new Date(item.time * 1000));
-      q('.name', li).textContent = item.name;
-      q('.location', li).textContent = item.location;
 
       if ('content' in document.createElement('template'))
         var item = q('li', document.importNode(content, true));

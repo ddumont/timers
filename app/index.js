@@ -26,9 +26,9 @@ window.addEventListener('hashchange', event => {
 
 // process data
 const processed = data.reduce((obj, node) => {
-  obj[node.type].push(node);
+  obj[node.type] && obj[node.type].push(node);
   return obj;
-}, { botany: [], fishing: [],  mining: [], hash: '' });
+}, { botany: [], mining: [], hash: '' });
 
 // sort nodes
 Object.keys(processed).forEach(key => {

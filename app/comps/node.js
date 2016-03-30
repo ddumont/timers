@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import * as bActions from '../actions/botany';
-import * as fActions from '../actions/fishing';
 import * as mActions from '../actions/mining';
 
 import './node.less';
@@ -14,7 +13,6 @@ const formatter = new Intl.DateTimeFormat(undefined, {
 
 const actionmap = {
   botany: bActions,
-  fishing: fActions,
   mining: mActions
 };
 

@@ -1121,69 +1121,6 @@ export default (function() {
       "time": "21:00",
       "duration": STD,
     },{
-      "type": "fishing",
-      "name": "Weather",
-      "time": "0:00",
-      "duration": STD,
-    },{
-      "type": "fishing",
-      "name": "Silver Sovereign [24h]",
-      "star": 2,
-      "location": "Oschon's Torch",
-      "time": "0:00",
-      "duration": STD,
-    },{
-      "type": "fishing",
-      "name": "Sunrise",
-      "time": "6:00",
-      "duration": STD,
-    },{
-      "type": "fishing",
-      "name": "Navigator's Brand [6-18]",
-      "star": 2,
-      "location": "Brewer's Beacon",
-      "time": "9:00",
-      "duration": 5*60*60
-    },{
-      "type": "fishing",
-      "name": "Weather",
-      "time": "8:00",
-      "duration": STD,
-    },{
-      "type": "fishing",
-      "name": "Mahi-Mahi",
-      "location": "Lower La Noscea",
-      "time": "10:00",
-      "duration": STD,
-    },{
-      "type": "fishing",
-      "name": "Weather",
-      "time": "16:00",
-      "duration": STD,
-    },{
-      "type": "fishing",
-      "name": "Cupfish [***]",
-      "location": "B.I. Mines - Tempest Gate",
-      "time": "17:00",
-      "duration": STD,
-    },{
-      "type": "fishing",
-      "name": "Sunset",
-      "time": "18:00",
-      "duration": STD,
-    },{
-      "type": "fishing",
-      "name": "Worm of Nym [Butterworm]",
-      "location": "Bronze Lake Shallows",
-      "time": "19:00",
-      "duration": STD,
-    },{
-      "type": "fishing",
-      "name": "Gigant Clam [Heavy Steel Jig]",
-      "location": "South Bloodshore",
-      "time": "23:00",
-      "duration": STD,
-    },{
       "type": "mining",
       "name": "Astral Moraine",
       "slot": 4,
