@@ -22,14 +22,16 @@ export default class WatchNode extends Component {
     const elapsed = clock.elapsed || 0;
 
     const diff = (day + node.time - elapsed) % day;
+    const diffdespawn = (day + node.time + node.duration - elapsed) % day;
     const spawn = eorzea - elapsed + node.time;
     const despawn = spawn + node.duration;
-    const time = formatter.format(new Date(diff * 1000));
+    const active = spawn < eorzea && eorzea < despawn;
+    const time = formatter.format(new Date((active ? diffdespawn : diff) * 1000));
 
 
     const classes = classNames({
       watchnode: true,
-      active: spawn < eorzea && eorzea < despawn
+      active: active
     });
 
     return (
