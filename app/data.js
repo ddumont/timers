@@ -1134,6 +1134,13 @@ export default (function() {
       "location": "Coerthas W. Highlands",
       "time": "7:00",
       "duration": HW,
+    },{
+      "type": "botany",
+      "name": "Seventh Heaven",
+      "slot": 1,
+      "location": "Churning Mists",
+      "time": "17:00",
+      "duration": HW,
     }
   ];
 
