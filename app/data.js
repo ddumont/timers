@@ -1141,6 +1141,34 @@ export default (function() {
       "location": "Churning Mists",
       "time": "17:00",
       "duration": HW,
+    },{
+      "type": "mining",
+      "name": "Smithsonite Ore",
+      "slot": 2,
+      "location": "Sea of Clouds",
+      "time": "1:00",
+      "duration": HW,
+    },{
+      "type": "mining",
+      "name": "Meteorite",
+      "slot": 3,
+      "location": "Sea of Clouds",
+      "time": "1:00",
+      "duration": HW,
+    },{
+      "type": "mining",
+      "name": "Red Alumen",
+      "slot": 2,
+      "location": "Azys Lla",
+      "time": "7:00",
+      "duration": HW,
+    },{
+      "type": "mining",
+      "name": "Sun Mica",
+      "slot": 2,
+      "location": "Sea of Clouds",
+      "time": "5:00",
+      "duration": HW,
     }
   ];
 
