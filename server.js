@@ -17,7 +17,7 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 app.use(webpackHotMiddleware(compiler));
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.listen(8080, function () {
   console.log('Server listening on http://localhost:8080, Ctrl+C to stop');
