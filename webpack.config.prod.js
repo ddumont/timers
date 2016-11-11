@@ -11,7 +11,7 @@ module.exports = Object.assign({}, baseConfig, {
     path: path.join(__dirname, 'dist'),
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name]-[chunkhash].chunk.js',
-    publicPath: '/dist/'
+    publicPath: '/'
   },
   plugins: [
     new WebpackMd5Hash(),
