@@ -16,7 +16,6 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
     chunkFilename: '[name]-[chunkhash].chunk.js',
-    publicPath: '/'
   },
   module: {
     loaders: [{
@@ -40,7 +39,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'app/index.pug',
-      inject: 'body',
+      inject: false,
       alwaysWriteToDisk: true,
       minify: false,
       cache: false

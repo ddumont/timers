@@ -10,7 +10,7 @@ import data from './data';
 import * as hActions from './actions/hash';
 import * as cActions from './actions/clock';
 
-import Worker from 'worker!./webworker.js';
+import Worker from 'worker?inline!./webworker.js';
 import serviceWorker from 'serviceworker!./svcworker.js';
 
 import './index.less';
@@ -19,6 +19,17 @@ function getHash(url) {
   const match = /^[^#]*#(.*)$/.exec(url);
   return match && match[1];
 }
+
+// Find our script include and grab the publicPath
+Array.prototype.slice.call(document.body.querySelectorAll('script.entry'))
+.some(function(elem) {
+  const match = /(.*\/)main\.[a-f0-9]+\.js$/i.exec(elem.src);
+  if (match && match[1]) {
+    __webpack_public_path__ = match[1];
+    return true;
+  }
+});
+
 
 window.addEventListener('hashchange', event => {
   store.dispatch(hActions.changed(getHash(event.newURL)));

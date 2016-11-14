@@ -36,3 +36,5 @@ html(lang="en")
         (adsbygoogle = window.adsbygoogle || []).push({});
       div.
         * Advertisement *
+    each chunk in htmlWebpackPlugin.files.chunks
+      script.entry(src=chunk.entry)

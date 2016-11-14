@@ -11,14 +11,13 @@ module.exports = Object.assign({}, baseConfig, {
     path: path.join(__dirname, 'dist'),
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name]-[chunkhash].chunk.js',
-    publicPath: '/'
   },
   plugins: [
     new WebpackMd5Hash(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'app/index.pug',
-      inject: 'body'
+      inject: false,
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
